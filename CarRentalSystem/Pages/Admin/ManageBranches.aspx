@@ -46,7 +46,7 @@
                             OnRowDeleting="GridViewBranches_RowDeleting"
                             BorderStyle="None" GridLines="None">
                             <Columns>
-                                <asp:BoundField DataField="BranchID" HeaderText="ID" ReadOnly="True" />
+                                <asp:BoundField DataField="BranchID" HeaderText="ID" ReadOnly="True" Visible="False" />
                                 <asp:BoundField DataField="Name" HeaderText="Branch Name" />
                                 <asp:CommandField ShowDeleteButton="True" ButtonType="Button" ControlStyle-CssClass="btn btn-danger btn-xs" />
                             </Columns>

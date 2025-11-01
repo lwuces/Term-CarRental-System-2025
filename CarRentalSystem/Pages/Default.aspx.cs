@@ -38,7 +38,9 @@ namespace CarRentalSystem
             lblTotalCustomers.Text = db.Customers.Count().ToString();
 
             // นับการเช่าที่ยังไม่คืน (Active)
-            lblActiveRentals.Text = db.Rentals.Count(r => r.ActualReturnDate == null).ToString();
+            lblActiveRentals.Text = db.Rentals.Count(r =>
+                r.ActualReturnDate == null && r.Car.Status == "Rented"
+            ).ToString();
         }
 
         // ฟังก์ชันเดิม: สำหรับโหลดสาขา

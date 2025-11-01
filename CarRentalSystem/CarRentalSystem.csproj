@@ -102,6 +102,8 @@
     <Content Include="Pages\Admin\Dashboard.aspx" />
     <Content Include="Pages\Admin\ManageBranches.aspx" />
     <Content Include="Pages\Admin\ManageCars.aspx" />
+    <Content Include="Pages\Admin\ManageReturns.aspx" />
+    <Content Include="Pages\Admin\ReturnSummary.aspx" />
     <Content Include="Pages\MyRentals.aspx" />
     <Content Include="Pages\Login.aspx" />
     <Content Include="Pages\Booking.aspx" />
@@ -223,6 +225,20 @@
     </Compile>
     <Compile Include="Pages\Admin\ManageCars.aspx.designer.cs">
       <DependentUpon>ManageCars.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Admin\ManageReturns.aspx.cs">
+      <DependentUpon>ManageReturns.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Admin\ManageReturns.aspx.designer.cs">
+      <DependentUpon>ManageReturns.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Admin\ReturnSummary.aspx.cs">
+      <DependentUpon>ReturnSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Admin\ReturnSummary.aspx.designer.cs">
+      <DependentUpon>ReturnSummary.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\MyRentals.aspx.cs">
       <DependentUpon>MyRentals.aspx</DependentUpon>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -29,6 +30,7 @@ namespace CarRentalSystem
                     liAdminDashboard.Visible = true;
                     liManageCars.Visible = true;
                     liManageBranches.Visible = true;
+                    liManageReturns.Visible = true; // (เพิ่มบรรทัดนี้)
                 }
                 else
                 {
@@ -39,6 +41,7 @@ namespace CarRentalSystem
                     liAdminDashboard.Visible = false;
                     liManageCars.Visible = false;
                     liManageBranches.Visible = false;
+                    liManageReturns.Visible = false; // (เพิ่มบรรทัดนี้)
                 }
             }
             else
@@ -53,6 +56,7 @@ namespace CarRentalSystem
                 liAdminDashboard.Visible = false;
                 liManageCars.Visible = false;
                 liManageBranches.Visible = false;
+                liManageReturns.Visible = false; // (เพิ่มบรรทัดนี้)
             }
         }
 

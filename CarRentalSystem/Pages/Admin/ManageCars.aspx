@@ -12,7 +12,7 @@
 
                 <%-- 3. ย้ายปุ่ม Add New Car มาไว้ที่หัว Panel ด้านขวา --%>
                 <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#addCarModal">
-                    <span class="glyphicon glyphicon-plus"></span>Add New Car
+                    <span class="glyphicon glyphicon-plus"></span>
                 </button>
                 <div class="clearfix"></div>
                 <%-- (Clear float) --%>

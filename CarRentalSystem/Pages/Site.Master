@@ -36,12 +36,12 @@
             </Scripts>
         </asp:ScriptManager>
 
-        <%-- 1. NAVBAR ใหม่ (แถบสีดำ เมนูขวา) - ใช้ HTML ของ Bootstrap 3 --%>
+        <%-- 1. NAVBAR (Bootstrap 3) --%>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
-                <%-- ส่วนโลโก้ (ซ้าย) --%>
+                <%-- Logo (Left) --%>
                 <div class="navbar-header">
-                    <%-- นี่คือปุ่ม Hamburger (สำหรับ Bootstrap 3) --%>
+                    <%-- Hamburger Button --%>
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -50,38 +50,36 @@
                     <a class="navbar-brand" runat="server" href="~/Pages/Default.aspx">Car Rental System</a>
                 </div>
 
-                <%-- ส่วนเมนู (ขวา) (สำหรับ Bootstrap 3) --%>
-                <%-- (โค้ด Navbar) --%>
+                <%-- Menu (Right) --%>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a runat="server" href="~/Pages/Default.aspx">Home (Search)</a></li>
                         <li><a runat="server" href="~/Pages/CarList.aspx">Browse Cars</a></li>
 
-                        <%-- VV นี่คือส่วนที่แก้ไข VV --%>
-
-                        <%-- 1. ลิงก์สำหรับลูกค้า (ซ่อนจาก Admin) --%>
+                        <%-- 1. Customer Link (Hide from Admin) --%>
                         <li id="liMyRentals" runat="server"><a runat="server" href="~/Pages/MyRentals.aspx">My Rentals</a></li>
 
-                        <%-- 2. ลิงก์สำหรับ Admin (ซ่อนจากลูกค้า) --%>
+                        <%-- 2. Admin Links (Hide from Customer) --%>
                         <li id="liAdminDashboard" runat="server" visible="false"><a runat="server" href="~/Pages/Admin/Dashboard.aspx">Admin Dashboard</a></li>
                         <li id="liManageCars" runat="server" visible="false"><a runat="server" href="~/Pages/Admin/ManageCars.aspx">Manage Cars</a></li>
                         <li id="liManageBranches" runat="server" visible="false"><a runat="server" href="~/Pages/Admin/ManageBranches.aspx">Manage Branches</a></li>
 
-                        <%-- 3. ส่วน Login/Logout (เหมือนเดิม) --%>
+                        <%-- (This is the new link from Step 3) --%>
+                        <li id="liManageReturns" runat="server" visible="false"><a runat="server" href="~/Pages/Admin/ManageReturns.aspx">Manage Returns</a></li>
+
+                        <%-- 3. Login/Logout Section --%>
                         <li>
                             <asp:Label ID="lblWelcome" runat="server" CssClass="navbar-text" Text=""></asp:Label></li>
                         <li id="liLogin" runat="server"><a runat="server" href="~/Pages/Login.aspx">Login</a></li>
                         <li id="liLogout" runat="server" visible="false">
                             <asp:LinkButton ID="lnkLogout" runat="server" OnClick="lnkLogout_Click">Logout</asp:LinkButton>
                         </li>
-                        <%-- ^^ สิ้นสุดส่วนที่แก้ไข ^^ --%>
                     </ul>
                 </div>
-                <%-- (สิ้นสุดโค้ด Navbar) --%>
-
             </div>
         </nav>
 
+        <%-- Main Content Area --%>
         <div class="container body-content" style="padding-top: 70px;">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
@@ -91,9 +89,9 @@
             </footer>
         </div>
     </form>
+
+    <%-- Bootstrap JS (Required for Hamburger Menu) --%>
     <asp:PlaceHolder runat="server">
-        <%-- 3. เพิ่ม JavaScript ของ Bootstrap (เพื่อให้ปุ่ม Hamburger ทำงาน) --%>
-        <%-- (ScriptManager ของคุณมี jQuery แล้ว เราจึงเพิ่มแค่ bootstrap.min.js) --%>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     </asp:PlaceHolder>
 </body>

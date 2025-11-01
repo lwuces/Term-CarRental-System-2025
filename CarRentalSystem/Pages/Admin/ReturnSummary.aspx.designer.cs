@@ -7,110 +7,110 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CarRentalSystem
+namespace CarRentalSystem.Pages.Admin
 {
 
 
-    public partial class SiteMaster
+    public partial class ReturnSummary
     {
 
         /// <summary>
-        /// head control.
+        /// lblCustomerName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        protected global::System.Web.UI.WebControls.Label lblCustomerName;
 
         /// <summary>
-        /// liMyRentals control.
+        /// lblCarModel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liMyRentals;
+        protected global::System.Web.UI.WebControls.Label lblCarModel;
 
         /// <summary>
-        /// liAdminDashboard control.
+        /// lblLicensePlate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liAdminDashboard;
+        protected global::System.Web.UI.WebControls.Label lblLicensePlate;
 
         /// <summary>
-        /// liManageCars control.
+        /// lblExpectedReturn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liManageCars;
+        protected global::System.Web.UI.WebControls.Label lblExpectedReturn;
 
         /// <summary>
-        /// liManageBranches control.
+        /// lblActualReturn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liManageBranches;
+        protected global::System.Web.UI.WebControls.Label lblActualReturn;
 
         /// <summary>
-        /// liManageReturns control.
+        /// lblOriginalFee control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liManageReturns;
+        protected global::System.Web.UI.WebControls.Label lblOriginalFee;
 
         /// <summary>
-        /// lblWelcome control.
+        /// lblLateDays control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWelcome;
+        protected global::System.Web.UI.WebControls.Label lblLateDays;
 
         /// <summary>
-        /// liLogin control.
+        /// lblLateFee control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liLogin;
+        protected global::System.Web.UI.WebControls.Label lblLateFee;
 
         /// <summary>
-        /// liLogout control.
+        /// lblTotalCost control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liLogout;
+        protected global::System.Web.UI.WebControls.Label lblTotalCost;
 
         /// <summary>
-        /// lnkLogout control.
+        /// btnConfirmReturn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkLogout;
+        protected global::System.Web.UI.WebControls.Button btnConfirmReturn;
 
         /// <summary>
-        /// MainContent control.
+        /// lblStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.WebControls.Label lblStatus;
     }
 }
