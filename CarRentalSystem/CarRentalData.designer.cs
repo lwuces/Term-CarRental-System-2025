@@ -33,9 +33,9 @@ namespace CarRentalSystem
     partial void InsertBranch(Branch instance);
     partial void UpdateBranch(Branch instance);
     partial void DeleteBranch(Branch instance);
-    partial void InsertRentalRate(RentalRate instance);
-    partial void UpdateRentalRate(RentalRate instance);
-    partial void DeleteRentalRate(RentalRate instance);
+    partial void InsertRental(Rental instance);
+    partial void UpdateRental(Rental instance);
+    partial void DeleteRental(Rental instance);
     partial void InsertCar(Car instance);
     partial void UpdateCar(Car instance);
     partial void DeleteCar(Car instance);
@@ -45,9 +45,6 @@ namespace CarRentalSystem
     partial void InsertCustomer(Customer instance);
     partial void UpdateCustomer(Customer instance);
     partial void DeleteCustomer(Customer instance);
-    partial void InsertRental(Rental instance);
-    partial void UpdateRental(Rental instance);
-    partial void DeleteRental(Rental instance);
     #endregion
 		
 		public CarRentalDataDataContext(string connection) : 
@@ -82,11 +79,11 @@ namespace CarRentalSystem
 			}
 		}
 		
-		public System.Data.Linq.Table<RentalRate> RentalRates
+		public System.Data.Linq.Table<Rental> Rentals
 		{
 			get
 			{
-				return this.GetTable<RentalRate>();
+				return this.GetTable<Rental>();
 			}
 		}
 		
@@ -113,14 +110,6 @@ namespace CarRentalSystem
 				return this.GetTable<Customer>();
 			}
 		}
-		
-		public System.Data.Linq.Table<Rental> Rentals
-		{
-			get
-			{
-				return this.GetTable<Rental>();
-			}
-		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Branch")]
@@ -133,9 +122,9 @@ namespace CarRentalSystem
 		
 		private string _Name;
 		
-		private EntitySet<Car> _Cars;
-		
 		private EntitySet<Rental> _Rentals;
+		
+		private EntitySet<Car> _Cars;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -149,8 +138,8 @@ namespace CarRentalSystem
 		
 		public Branch()
 		{
-			this._Cars = new EntitySet<Car>(new Action<Car>(this.attach_Cars), new Action<Car>(this.detach_Cars));
 			this._Rentals = new EntitySet<Rental>(new Action<Rental>(this.attach_Rentals), new Action<Rental>(this.detach_Rentals));
+			this._Cars = new EntitySet<Car>(new Action<Car>(this.attach_Cars), new Action<Car>(this.detach_Cars));
 			OnCreated();
 		}
 		
@@ -194,19 +183,6 @@ namespace CarRentalSystem
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Branch_Car", Storage="_Cars", ThisKey="BranchID", OtherKey="BranchID")]
-		public EntitySet<Car> Cars
-		{
-			get
-			{
-				return this._Cars;
-			}
-			set
-			{
-				this._Cars.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Branch_Rental", Storage="_Rentals", ThisKey="BranchID", OtherKey="RentalBranchID")]
 		public EntitySet<Rental> Rentals
 		{
@@ -217,6 +193,19 @@ namespace CarRentalSystem
 			set
 			{
 				this._Rentals.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Branch_Car", Storage="_Cars", ThisKey="BranchID", OtherKey="BranchID")]
+		public EntitySet<Car> Cars
+		{
+			get
+			{
+				return this._Cars;
+			}
+			set
+			{
+				this._Cars.Assign(value);
 			}
 		}
 		
@@ -240,18 +229,6 @@ namespace CarRentalSystem
 			}
 		}
 		
-		private void attach_Cars(Car entity)
-		{
-			this.SendPropertyChanging();
-			entity.Branch = this;
-		}
-		
-		private void detach_Cars(Car entity)
-		{
-			this.SendPropertyChanging();
-			entity.Branch = null;
-		}
-		
 		private void attach_Rentals(Rental entity)
 		{
 			this.SendPropertyChanging();
@@ -263,158 +240,372 @@ namespace CarRentalSystem
 			this.SendPropertyChanging();
 			entity.Branch = null;
 		}
+		
+		private void attach_Cars(Car entity)
+		{
+			this.SendPropertyChanging();
+			entity.Branch = this;
+		}
+		
+		private void detach_Cars(Car entity)
+		{
+			this.SendPropertyChanging();
+			entity.Branch = null;
+		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RentalRate")]
-	public partial class RentalRate : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rental")]
+	public partial class Rental : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _RateID;
+		private int _RentalID;
 		
-		private int _TypeID;
+		private int _CustomerID;
 		
-		private string _SeasonName;
+		private int _CarID;
 		
-		private decimal _DailyRate;
+		private System.DateTime _StartDate;
 		
-		private EntityRef<CarType> _CarType;
+		private System.DateTime _ExpectedReturnDate;
+		
+		private System.Nullable<System.DateTime> _ActualReturnDate;
+		
+		private int _RentalBranchID;
+		
+		private System.Nullable<decimal> _TotalFee;
+		
+		private System.Nullable<decimal> _LateFee;
+		
+		private EntityRef<Branch> _Branch;
+		
+		private EntityRef<Car> _Car;
+		
+		private EntityRef<Customer> _Customer;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnRateIDChanging(int value);
-    partial void OnRateIDChanged();
-    partial void OnTypeIDChanging(int value);
-    partial void OnTypeIDChanged();
-    partial void OnSeasonNameChanging(string value);
-    partial void OnSeasonNameChanged();
-    partial void OnDailyRateChanging(decimal value);
-    partial void OnDailyRateChanged();
+    partial void OnRentalIDChanging(int value);
+    partial void OnRentalIDChanged();
+    partial void OnCustomerIDChanging(int value);
+    partial void OnCustomerIDChanged();
+    partial void OnCarIDChanging(int value);
+    partial void OnCarIDChanged();
+    partial void OnStartDateChanging(System.DateTime value);
+    partial void OnStartDateChanged();
+    partial void OnExpectedReturnDateChanging(System.DateTime value);
+    partial void OnExpectedReturnDateChanged();
+    partial void OnActualReturnDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnActualReturnDateChanged();
+    partial void OnRentalBranchIDChanging(int value);
+    partial void OnRentalBranchIDChanged();
+    partial void OnTotalFeeChanging(System.Nullable<decimal> value);
+    partial void OnTotalFeeChanged();
+    partial void OnLateFeeChanging(System.Nullable<decimal> value);
+    partial void OnLateFeeChanged();
     #endregion
 		
-		public RentalRate()
+		public Rental()
 		{
-			this._CarType = default(EntityRef<CarType>);
+			this._Branch = default(EntityRef<Branch>);
+			this._Car = default(EntityRef<Car>);
+			this._Customer = default(EntityRef<Customer>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RateID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int RateID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RentalID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int RentalID
 		{
 			get
 			{
-				return this._RateID;
+				return this._RentalID;
 			}
 			set
 			{
-				if ((this._RateID != value))
+				if ((this._RentalID != value))
 				{
-					this.OnRateIDChanging(value);
+					this.OnRentalIDChanging(value);
 					this.SendPropertyChanging();
-					this._RateID = value;
-					this.SendPropertyChanged("RateID");
-					this.OnRateIDChanged();
+					this._RentalID = value;
+					this.SendPropertyChanged("RentalID");
+					this.OnRentalIDChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TypeID", DbType="Int NOT NULL")]
-		public int TypeID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerID", DbType="Int NOT NULL")]
+		public int CustomerID
 		{
 			get
 			{
-				return this._TypeID;
+				return this._CustomerID;
 			}
 			set
 			{
-				if ((this._TypeID != value))
+				if ((this._CustomerID != value))
 				{
-					if (this._CarType.HasLoadedOrAssignedValue)
+					if (this._Customer.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnTypeIDChanging(value);
+					this.OnCustomerIDChanging(value);
 					this.SendPropertyChanging();
-					this._TypeID = value;
-					this.SendPropertyChanged("TypeID");
-					this.OnTypeIDChanged();
+					this._CustomerID = value;
+					this.SendPropertyChanged("CustomerID");
+					this.OnCustomerIDChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SeasonName", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string SeasonName
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarID", DbType="Int NOT NULL")]
+		public int CarID
 		{
 			get
 			{
-				return this._SeasonName;
+				return this._CarID;
 			}
 			set
 			{
-				if ((this._SeasonName != value))
+				if ((this._CarID != value))
 				{
-					this.OnSeasonNameChanging(value);
+					if (this._Car.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCarIDChanging(value);
 					this.SendPropertyChanging();
-					this._SeasonName = value;
-					this.SendPropertyChanged("SeasonName");
-					this.OnSeasonNameChanged();
+					this._CarID = value;
+					this.SendPropertyChanged("CarID");
+					this.OnCarIDChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DailyRate", DbType="Decimal(10,2) NOT NULL")]
-		public decimal DailyRate
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="Date NOT NULL")]
+		public System.DateTime StartDate
 		{
 			get
 			{
-				return this._DailyRate;
+				return this._StartDate;
 			}
 			set
 			{
-				if ((this._DailyRate != value))
+				if ((this._StartDate != value))
 				{
-					this.OnDailyRateChanging(value);
+					this.OnStartDateChanging(value);
 					this.SendPropertyChanging();
-					this._DailyRate = value;
-					this.SendPropertyChanged("DailyRate");
-					this.OnDailyRateChanged();
+					this._StartDate = value;
+					this.SendPropertyChanged("StartDate");
+					this.OnStartDateChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CarType_RentalRate", Storage="_CarType", ThisKey="TypeID", OtherKey="TypeID", IsForeignKey=true)]
-		public CarType CarType
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExpectedReturnDate", DbType="Date NOT NULL")]
+		public System.DateTime ExpectedReturnDate
 		{
 			get
 			{
-				return this._CarType.Entity;
+				return this._ExpectedReturnDate;
 			}
 			set
 			{
-				CarType previousValue = this._CarType.Entity;
+				if ((this._ExpectedReturnDate != value))
+				{
+					this.OnExpectedReturnDateChanging(value);
+					this.SendPropertyChanging();
+					this._ExpectedReturnDate = value;
+					this.SendPropertyChanged("ExpectedReturnDate");
+					this.OnExpectedReturnDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ActualReturnDate", DbType="Date")]
+		public System.Nullable<System.DateTime> ActualReturnDate
+		{
+			get
+			{
+				return this._ActualReturnDate;
+			}
+			set
+			{
+				if ((this._ActualReturnDate != value))
+				{
+					this.OnActualReturnDateChanging(value);
+					this.SendPropertyChanging();
+					this._ActualReturnDate = value;
+					this.SendPropertyChanged("ActualReturnDate");
+					this.OnActualReturnDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RentalBranchID", DbType="Int NOT NULL")]
+		public int RentalBranchID
+		{
+			get
+			{
+				return this._RentalBranchID;
+			}
+			set
+			{
+				if ((this._RentalBranchID != value))
+				{
+					if (this._Branch.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRentalBranchIDChanging(value);
+					this.SendPropertyChanging();
+					this._RentalBranchID = value;
+					this.SendPropertyChanged("RentalBranchID");
+					this.OnRentalBranchIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalFee", DbType="Decimal(10,2)")]
+		public System.Nullable<decimal> TotalFee
+		{
+			get
+			{
+				return this._TotalFee;
+			}
+			set
+			{
+				if ((this._TotalFee != value))
+				{
+					this.OnTotalFeeChanging(value);
+					this.SendPropertyChanging();
+					this._TotalFee = value;
+					this.SendPropertyChanged("TotalFee");
+					this.OnTotalFeeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LateFee", DbType="Decimal(10,2)")]
+		public System.Nullable<decimal> LateFee
+		{
+			get
+			{
+				return this._LateFee;
+			}
+			set
+			{
+				if ((this._LateFee != value))
+				{
+					this.OnLateFeeChanging(value);
+					this.SendPropertyChanging();
+					this._LateFee = value;
+					this.SendPropertyChanged("LateFee");
+					this.OnLateFeeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Branch_Rental", Storage="_Branch", ThisKey="RentalBranchID", OtherKey="BranchID", IsForeignKey=true)]
+		public Branch Branch
+		{
+			get
+			{
+				return this._Branch.Entity;
+			}
+			set
+			{
+				Branch previousValue = this._Branch.Entity;
 				if (((previousValue != value) 
-							|| (this._CarType.HasLoadedOrAssignedValue == false)))
+							|| (this._Branch.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._CarType.Entity = null;
-						previousValue.RentalRates.Remove(this);
+						this._Branch.Entity = null;
+						previousValue.Rentals.Remove(this);
 					}
-					this._CarType.Entity = value;
+					this._Branch.Entity = value;
 					if ((value != null))
 					{
-						value.RentalRates.Add(this);
-						this._TypeID = value.TypeID;
+						value.Rentals.Add(this);
+						this._RentalBranchID = value.BranchID;
 					}
 					else
 					{
-						this._TypeID = default(int);
+						this._RentalBranchID = default(int);
 					}
-					this.SendPropertyChanged("CarType");
+					this.SendPropertyChanged("Branch");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Car_Rental", Storage="_Car", ThisKey="CarID", OtherKey="CarID", IsForeignKey=true)]
+		public Car Car
+		{
+			get
+			{
+				return this._Car.Entity;
+			}
+			set
+			{
+				Car previousValue = this._Car.Entity;
+				if (((previousValue != value) 
+							|| (this._Car.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Car.Entity = null;
+						previousValue.Rentals.Remove(this);
+					}
+					this._Car.Entity = value;
+					if ((value != null))
+					{
+						value.Rentals.Add(this);
+						this._CarID = value.CarID;
+					}
+					else
+					{
+						this._CarID = default(int);
+					}
+					this.SendPropertyChanged("Car");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_Rental", Storage="_Customer", ThisKey="CustomerID", OtherKey="CustomerID", IsForeignKey=true)]
+		public Customer Customer
+		{
+			get
+			{
+				return this._Customer.Entity;
+			}
+			set
+			{
+				Customer previousValue = this._Customer.Entity;
+				if (((previousValue != value) 
+							|| (this._Customer.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Customer.Entity = null;
+						previousValue.Rentals.Remove(this);
+					}
+					this._Customer.Entity = value;
+					if ((value != null))
+					{
+						value.Rentals.Add(this);
+						this._CustomerID = value.CustomerID;
+					}
+					else
+					{
+						this._CustomerID = default(int);
+					}
+					this.SendPropertyChanged("Customer");
 				}
 			}
 		}
@@ -814,8 +1005,6 @@ namespace CarRentalSystem
 		
 		private string _TypeName;
 		
-		private EntitySet<RentalRate> _RentalRates;
-		
 		private EntitySet<Car> _Cars;
 		
     #region Extensibility Method Definitions
@@ -830,7 +1019,6 @@ namespace CarRentalSystem
 		
 		public CarType()
 		{
-			this._RentalRates = new EntitySet<RentalRate>(new Action<RentalRate>(this.attach_RentalRates), new Action<RentalRate>(this.detach_RentalRates));
 			this._Cars = new EntitySet<Car>(new Action<Car>(this.attach_Cars), new Action<Car>(this.detach_Cars));
 			OnCreated();
 		}
@@ -875,19 +1063,6 @@ namespace CarRentalSystem
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CarType_RentalRate", Storage="_RentalRates", ThisKey="TypeID", OtherKey="TypeID")]
-		public EntitySet<RentalRate> RentalRates
-		{
-			get
-			{
-				return this._RentalRates;
-			}
-			set
-			{
-				this._RentalRates.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CarType_Car", Storage="_Cars", ThisKey="TypeID", OtherKey="TypeID")]
 		public EntitySet<Car> Cars
 		{
@@ -919,18 +1094,6 @@ namespace CarRentalSystem
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_RentalRates(RentalRate entity)
-		{
-			this.SendPropertyChanging();
-			entity.CarType = this;
-		}
-		
-		private void detach_RentalRates(RentalRate entity)
-		{
-			this.SendPropertyChanging();
-			entity.CarType = null;
 		}
 		
 		private void attach_Cars(Car entity)
@@ -1177,383 +1340,6 @@ namespace CarRentalSystem
 		{
 			this.SendPropertyChanging();
 			entity.Customer = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rental")]
-	public partial class Rental : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _RentalID;
-		
-		private int _CustomerID;
-		
-		private int _CarID;
-		
-		private System.DateTime _StartDate;
-		
-		private System.DateTime _ExpectedReturnDate;
-		
-		private System.Nullable<System.DateTime> _ActualReturnDate;
-		
-		private int _RentalBranchID;
-		
-		private System.Nullable<decimal> _TotalFee;
-		
-		private System.Nullable<decimal> _LateFee;
-		
-		private EntityRef<Car> _Car;
-		
-		private EntityRef<Customer> _Customer;
-		
-		private EntityRef<Branch> _Branch;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnRentalIDChanging(int value);
-    partial void OnRentalIDChanged();
-    partial void OnCustomerIDChanging(int value);
-    partial void OnCustomerIDChanged();
-    partial void OnCarIDChanging(int value);
-    partial void OnCarIDChanged();
-    partial void OnStartDateChanging(System.DateTime value);
-    partial void OnStartDateChanged();
-    partial void OnExpectedReturnDateChanging(System.DateTime value);
-    partial void OnExpectedReturnDateChanged();
-    partial void OnActualReturnDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnActualReturnDateChanged();
-    partial void OnRentalBranchIDChanging(int value);
-    partial void OnRentalBranchIDChanged();
-    partial void OnTotalFeeChanging(System.Nullable<decimal> value);
-    partial void OnTotalFeeChanged();
-    partial void OnLateFeeChanging(System.Nullable<decimal> value);
-    partial void OnLateFeeChanged();
-    #endregion
-		
-		public Rental()
-		{
-			this._Car = default(EntityRef<Car>);
-			this._Customer = default(EntityRef<Customer>);
-			this._Branch = default(EntityRef<Branch>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RentalID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int RentalID
-		{
-			get
-			{
-				return this._RentalID;
-			}
-			set
-			{
-				if ((this._RentalID != value))
-				{
-					this.OnRentalIDChanging(value);
-					this.SendPropertyChanging();
-					this._RentalID = value;
-					this.SendPropertyChanged("RentalID");
-					this.OnRentalIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerID", DbType="Int NOT NULL")]
-		public int CustomerID
-		{
-			get
-			{
-				return this._CustomerID;
-			}
-			set
-			{
-				if ((this._CustomerID != value))
-				{
-					if (this._Customer.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCustomerIDChanging(value);
-					this.SendPropertyChanging();
-					this._CustomerID = value;
-					this.SendPropertyChanged("CustomerID");
-					this.OnCustomerIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CarID", DbType="Int NOT NULL")]
-		public int CarID
-		{
-			get
-			{
-				return this._CarID;
-			}
-			set
-			{
-				if ((this._CarID != value))
-				{
-					if (this._Car.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCarIDChanging(value);
-					this.SendPropertyChanging();
-					this._CarID = value;
-					this.SendPropertyChanged("CarID");
-					this.OnCarIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="Date NOT NULL")]
-		public System.DateTime StartDate
-		{
-			get
-			{
-				return this._StartDate;
-			}
-			set
-			{
-				if ((this._StartDate != value))
-				{
-					this.OnStartDateChanging(value);
-					this.SendPropertyChanging();
-					this._StartDate = value;
-					this.SendPropertyChanged("StartDate");
-					this.OnStartDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExpectedReturnDate", DbType="Date NOT NULL")]
-		public System.DateTime ExpectedReturnDate
-		{
-			get
-			{
-				return this._ExpectedReturnDate;
-			}
-			set
-			{
-				if ((this._ExpectedReturnDate != value))
-				{
-					this.OnExpectedReturnDateChanging(value);
-					this.SendPropertyChanging();
-					this._ExpectedReturnDate = value;
-					this.SendPropertyChanged("ExpectedReturnDate");
-					this.OnExpectedReturnDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ActualReturnDate", DbType="Date")]
-		public System.Nullable<System.DateTime> ActualReturnDate
-		{
-			get
-			{
-				return this._ActualReturnDate;
-			}
-			set
-			{
-				if ((this._ActualReturnDate != value))
-				{
-					this.OnActualReturnDateChanging(value);
-					this.SendPropertyChanging();
-					this._ActualReturnDate = value;
-					this.SendPropertyChanged("ActualReturnDate");
-					this.OnActualReturnDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RentalBranchID", DbType="Int NOT NULL")]
-		public int RentalBranchID
-		{
-			get
-			{
-				return this._RentalBranchID;
-			}
-			set
-			{
-				if ((this._RentalBranchID != value))
-				{
-					if (this._Branch.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnRentalBranchIDChanging(value);
-					this.SendPropertyChanging();
-					this._RentalBranchID = value;
-					this.SendPropertyChanged("RentalBranchID");
-					this.OnRentalBranchIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalFee", DbType="Decimal(10,2)")]
-		public System.Nullable<decimal> TotalFee
-		{
-			get
-			{
-				return this._TotalFee;
-			}
-			set
-			{
-				if ((this._TotalFee != value))
-				{
-					this.OnTotalFeeChanging(value);
-					this.SendPropertyChanging();
-					this._TotalFee = value;
-					this.SendPropertyChanged("TotalFee");
-					this.OnTotalFeeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LateFee", DbType="Decimal(10,2)")]
-		public System.Nullable<decimal> LateFee
-		{
-			get
-			{
-				return this._LateFee;
-			}
-			set
-			{
-				if ((this._LateFee != value))
-				{
-					this.OnLateFeeChanging(value);
-					this.SendPropertyChanging();
-					this._LateFee = value;
-					this.SendPropertyChanged("LateFee");
-					this.OnLateFeeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Car_Rental", Storage="_Car", ThisKey="CarID", OtherKey="CarID", IsForeignKey=true)]
-		public Car Car
-		{
-			get
-			{
-				return this._Car.Entity;
-			}
-			set
-			{
-				Car previousValue = this._Car.Entity;
-				if (((previousValue != value) 
-							|| (this._Car.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Car.Entity = null;
-						previousValue.Rentals.Remove(this);
-					}
-					this._Car.Entity = value;
-					if ((value != null))
-					{
-						value.Rentals.Add(this);
-						this._CarID = value.CarID;
-					}
-					else
-					{
-						this._CarID = default(int);
-					}
-					this.SendPropertyChanged("Car");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_Rental", Storage="_Customer", ThisKey="CustomerID", OtherKey="CustomerID", IsForeignKey=true)]
-		public Customer Customer
-		{
-			get
-			{
-				return this._Customer.Entity;
-			}
-			set
-			{
-				Customer previousValue = this._Customer.Entity;
-				if (((previousValue != value) 
-							|| (this._Customer.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Customer.Entity = null;
-						previousValue.Rentals.Remove(this);
-					}
-					this._Customer.Entity = value;
-					if ((value != null))
-					{
-						value.Rentals.Add(this);
-						this._CustomerID = value.CustomerID;
-					}
-					else
-					{
-						this._CustomerID = default(int);
-					}
-					this.SendPropertyChanged("Customer");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Branch_Rental", Storage="_Branch", ThisKey="RentalBranchID", OtherKey="BranchID", IsForeignKey=true)]
-		public Branch Branch
-		{
-			get
-			{
-				return this._Branch.Entity;
-			}
-			set
-			{
-				Branch previousValue = this._Branch.Entity;
-				if (((previousValue != value) 
-							|| (this._Branch.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Branch.Entity = null;
-						previousValue.Rentals.Remove(this);
-					}
-					this._Branch.Entity = value;
-					if ((value != null))
-					{
-						value.Rentals.Add(this);
-						this._RentalBranchID = value.BranchID;
-					}
-					else
-					{
-						this._RentalBranchID = default(int);
-					}
-					this.SendPropertyChanged("Branch");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 }

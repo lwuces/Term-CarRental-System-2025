@@ -3,17 +3,24 @@
     <Type Name="Branch">
       <Column Name="BranchID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Association Name="Branch_Car" Member="Cars" ThisKey="BranchID" OtherKey="BranchID" Type="Car" />
       <Association Name="Branch_Rental" Member="Rentals" ThisKey="BranchID" OtherKey="RentalBranchID" Type="Rental" />
+      <Association Name="Branch_Car" Member="Cars" ThisKey="BranchID" OtherKey="BranchID" Type="Car" />
     </Type>
   </Table>
-  <Table Name="dbo.RentalRate" Member="RentalRates">
-    <Type Name="RentalRate">
-      <Column Name="RateID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="TypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="SeasonName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="DailyRate" Type="System.Decimal" DbType="Decimal(10,2) NOT NULL" CanBeNull="false" />
-      <Association Name="CarType_RentalRate" Member="CarType" ThisKey="TypeID" OtherKey="TypeID" Type="CarType" IsForeignKey="true" />
+  <Table Name="dbo.Rental" Member="Rentals">
+    <Type Name="Rental">
+      <Column Name="RentalID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CustomerID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CarID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="ExpectedReturnDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="ActualReturnDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="RentalBranchID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TotalFee" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="LateFee" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Association Name="Branch_Rental" Member="Branch" ThisKey="RentalBranchID" OtherKey="BranchID" Type="Branch" IsForeignKey="true" />
+      <Association Name="Car_Rental" Member="Car" ThisKey="CarID" OtherKey="CarID" Type="Car" IsForeignKey="true" />
+      <Association Name="Customer_Rental" Member="Customer" ThisKey="CustomerID" OtherKey="CustomerID" Type="Customer" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Car" Member="Cars">
@@ -36,7 +43,6 @@
     <Type Name="CarType">
       <Column Name="TypeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="TypeName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="CarType_RentalRate" Member="RentalRates" ThisKey="TypeID" OtherKey="TypeID" Type="RentalRate" />
       <Association Name="CarType_Car" Member="Cars" ThisKey="TypeID" OtherKey="TypeID" Type="Car" />
     </Type>
   </Table>
@@ -50,22 +56,6 @@
       <Column Name="Password" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="IsAdmin" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="Customer_Rental" Member="Rentals" ThisKey="CustomerID" OtherKey="CustomerID" Type="Rental" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rental" Member="Rentals">
-    <Type Name="Rental">
-      <Column Name="RentalID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="CustomerID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CarID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="StartDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="ExpectedReturnDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="ActualReturnDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="RentalBranchID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="TotalFee" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
-      <Column Name="LateFee" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
-      <Association Name="Car_Rental" Member="Car" ThisKey="CarID" OtherKey="CarID" Type="Car" IsForeignKey="true" />
-      <Association Name="Customer_Rental" Member="Customer" ThisKey="CustomerID" OtherKey="CustomerID" Type="Customer" IsForeignKey="true" />
-      <Association Name="Branch_Rental" Member="Branch" ThisKey="RentalBranchID" OtherKey="BranchID" Type="Branch" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

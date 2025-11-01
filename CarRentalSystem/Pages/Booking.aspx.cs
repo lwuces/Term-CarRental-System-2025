@@ -66,18 +66,18 @@ namespace CarRentalSystem.Pages
 
         private void LoadCarDetails(int carID)
         {
+            // (แก้ไข) ไม่ต้อง Join ตาราง RentalRate
             var carDetails = (from car in db.Cars
                               join type in db.CarTypes on car.TypeID equals type.TypeID
                               join branch in db.Branches on car.BranchID equals branch.BranchID
-                              join rate in db.RentalRates on car.TypeID equals rate.TypeID
-                              where car.CarID == carID && rate.SeasonName == "Normal"
+                              where car.CarID == carID
                               select new
                               {
                                   car.Model,
                                   type.TypeName,
                                   branch.Name,
                                   car.LicensePlate,
-                                  rate.DailyRate,
+                                  car.DailyRate, // <-- (ใช้ DailyRate จากตาราง Car)
                                   car.BranchID
                               }).FirstOrDefault();
 
@@ -87,13 +87,12 @@ namespace CarRentalSystem.Pages
                 return;
             }
 
-            // แสดงผลใน Label
+            // (การแสดงผลและการเก็บค่าใน ViewState ยังเหมือนเดิม)
             lblModel.Text = carDetails.Model;
             lblLicensePlate.Text = carDetails.LicensePlate;
             lblBranch.Text = carDetails.Name;
-            lblRate.Text = carDetails.DailyRate.ToString("N0"); // N0 = ไม่มีทศนิยม
+            lblRate.Text = carDetails.DailyRate.ToString("N0");
 
-            // เก็บค่า Global ไว้ใช้ (ผ่าน ViewState)
             DailyRate = carDetails.DailyRate;
             RentalBranchID = carDetails.BranchID;
         }
