@@ -1,21 +1,26 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Pages/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="CarRentalSystem._Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    
+
     <%-- 1. ใช้คลาสจัดกลางที่เราเพิ่งสร้างใน Site.css --%>
     <div class="main-content-centered">
 
         <%-- 2. ส่วนต้อนรับ (เหมือนรูปที่ 1) --%>
-        <h2>Welcome! 👋</h2>
+        <h2> Welcome! 👋</h2>
         <p class="lead">Use the search form below or the navigation bar to manage cars, customers, and rental records.</p>
-        
+
         <hr />
 
-        <%-- 3. ส่วนค้นหา (จากขั้นตอนก่อน) --%>
+        <%-- 3. ส่วนค้นหา --%>
         <h3>ค้นหารถเช่า</h3>
-        <%-- เราจัดข้อความใน Label ให้ชิดซ้าย (text-align: left) เพื่อไม่ให้มันอยู่ตรงกลาง --%>
-        <div class="row" style="text-align: left;">
-            <div class="col-md-3">
+        <div class="row">
+            <%-- (1. ลบ style="text-align: left;" ออก) --%>
+
+            <%-- (เราจะจัดคอลัมน์ใหม่ให้อยู่กึ่งกลาง โดยใช้ offset) --%>
+            <%-- (2 + 3 + 3 + 3 + 1 = 12) --%>
+
+            <div class="col-md-2 col-md-offset-1">
+                <%-- (เพิ่ม col-md-offset-1) --%>
                 <label>เลือกสาขา:</label>
                 <asp:DropDownList ID="ddlPickupBranch" runat="server" CssClass="form-control"></asp:DropDownList>
             </div>
@@ -27,7 +32,8 @@
                 <label>วันที่คืนรถ:</label>
                 <asp:TextBox ID="txtReturnDate" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
+                <%-- (2. ขยับปุ่มไปทางขวา) --%>
                 <br />
                 <asp:Button ID="btnSearch" runat="server" Text="ค้นหารถ" CssClass="btn btn-primary btn-lg" OnClick="btnSearch_Click" />
             </div>
@@ -57,6 +63,6 @@
             </div>
         </div>
 
-    </div> <%-- ปิด .main-content-centered --%>
-
+    </div>
+    <%-- ปิด .main-content-centered --%>
 </asp:Content>

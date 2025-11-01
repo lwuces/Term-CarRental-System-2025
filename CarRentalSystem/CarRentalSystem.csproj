@@ -99,6 +99,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\minimal-theme.css" />
     <Content Include="Pages\Admin\Dashboard.aspx" />
     <Content Include="Pages\Admin\ManageBranches.aspx" />
     <Content Include="Pages\Admin\ManageCars.aspx" />

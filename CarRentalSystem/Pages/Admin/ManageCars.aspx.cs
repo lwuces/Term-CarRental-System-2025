@@ -151,27 +151,32 @@ namespace CarRentalSystem.Pages.Admin
         {
             try
             {
-                // 1. ดึง ID ของแถว
+                // 1. ดึง ID ของรถ
                 int carID = (int)GridViewCars.DataKeys[e.RowIndex].Value;
 
-                // 2. ค้นหารถ
-                Car carToArchive = db.Cars.Single(c => c.CarID == carID);
+                // 2. (สำคัญ) ลบประวัติการเช่า (Rental) ของรถคันนี้ทั้งหมดก่อน
+                //    เพื่อป้องกัน Foreign Key Error
+                var rentalsToDelete = db.Rentals.Where(r => r.CarID == carID);
+                db.Rentals.DeleteAllOnSubmit(rentalsToDelete);
 
-                // 3. (แก้ไข) เปลี่ยนจากการลบ เป็นการอัปเดตสถานะ
-                carToArchive.Status = "Archived";
+                // 3. ค้นหารถ
+                Car carToDelete = db.Cars.Single(c => c.CarID == carID);
 
-                // 4. บันทึก
+                // 4. (ใหม่) ลบรถคันนี้จริงๆ
+                db.Cars.DeleteOnSubmit(carToDelete);
+
+                // 5. บันทึกการเปลี่ยนแปลงทั้งหมด
                 db.SubmitChanges();
 
-                // 5. โหลดตารางใหม่
+                // 6. โหลดตารางใหม่
                 LoadCars();
-                upGrid.Update(); // (อัปเดต Grid Panel)
+                upGrid.Update();
             }
             catch (Exception ex)
             {
-                // (แก้ไข) ใช้งาน 'ex' เพื่อแสดงข้อความ Error
+                // (แสดง Error ถ้ามี)
                 lblGridStatus.Text = "Error deleting car: " + ex.Message;
-                upGrid.Update(); // (อัปเดต Grid Panel เพื่อโชว์ Error)
+                upGrid.Update();
             }
         }
     }
