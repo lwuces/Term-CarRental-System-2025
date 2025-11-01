@@ -1,0 +1,100 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="CarRentalSystem.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+
+    <title><%: Page.Title %> - Car Rental System</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+        <%-- 1. NAVBAR ใหม่ (แถบสีดำ เมนูขวา) - ใช้ HTML ของ Bootstrap 3 --%>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <%-- ส่วนโลโก้ (ซ้าย) --%>
+                <div class="navbar-header">
+                    <%-- นี่คือปุ่ม Hamburger (สำหรับ Bootstrap 3) --%>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" runat="server" href="~/Pages/Default.aspx">Car Rental System</a>
+                </div>
+
+                <%-- ส่วนเมนู (ขวา) (สำหรับ Bootstrap 3) --%>
+                <%-- (โค้ด Navbar) --%>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a runat="server" href="~/Pages/Default.aspx">Home (Search)</a></li>
+                        <li><a runat="server" href="~/Pages/CarList.aspx">Browse Cars</a></li>
+
+                        <%-- VV นี่คือส่วนที่แก้ไข VV --%>
+
+                        <%-- 1. ลิงก์สำหรับลูกค้า (ซ่อนจาก Admin) --%>
+                        <li id="liMyRentals" runat="server"><a runat="server" href="~/Pages/MyRentals.aspx">My Rentals</a></li>
+
+                        <%-- 2. ลิงก์สำหรับ Admin (ซ่อนจากลูกค้า) --%>
+                        <li id="liAdminDashboard" runat="server" visible="false"><a runat="server" href="~/Pages/Admin/Dashboard.aspx">Admin Dashboard</a></li>
+                        <li id="liManageCars" runat="server" visible="false"><a runat="server" href="~/Pages/Admin/ManageCars.aspx">Manage Cars</a></li>
+                        <li id="liManageBranches" runat="server" visible="false"><a runat="server" href="~/Pages/Admin/ManageBranches.aspx">Manage Branches</a></li>
+
+                        <%-- 3. ส่วน Login/Logout (เหมือนเดิม) --%>
+                        <li>
+                            <asp:Label ID="lblWelcome" runat="server" CssClass="navbar-text" Text=""></asp:Label></li>
+                        <li id="liLogin" runat="server"><a runat="server" href="~/Pages/Login.aspx">Login</a></li>
+                        <li id="liLogout" runat="server" visible="false">
+                            <asp:LinkButton ID="lnkLogout" runat="server" OnClick="lnkLogout_Click">Logout</asp:LinkButton>
+                        </li>
+                        <%-- ^^ สิ้นสุดส่วนที่แก้ไข ^^ --%>
+                    </ul>
+                </div>
+                <%-- (สิ้นสุดโค้ด Navbar) --%>
+
+            </div>
+        </nav>
+
+        <div class="container body-content" style="padding-top: 70px;">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+            <footer>
+                <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
+            </footer>
+        </div>
+    </form>
+    <asp:PlaceHolder runat="server">
+        <%-- 3. เพิ่ม JavaScript ของ Bootstrap (เพื่อให้ปุ่ม Hamburger ทำงาน) --%>
+        <%-- (ScriptManager ของคุณมี jQuery แล้ว เราจึงเพิ่มแค่ bootstrap.min.js) --%>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </asp:PlaceHolder>
+</body>
+</html>
