@@ -37,27 +37,32 @@
                                 <asp:TemplateField HeaderText="Model">
                                     <ItemTemplate><%# Eval("Model") %></ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="txtEditModel" runat="server" Text='<%# Bind("Model") %>' CssClass="form-control"></asp:TextBox></EditItemTemplate>
+                                        <asp:TextBox ID="txtEditModel" runat="server" Text='<%# Bind("Model") %>' CssClass="form-control"></asp:TextBox>
+                                    </EditItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Plate">
                                     <ItemTemplate><%# Eval("LicensePlate") %></ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="txtEditLicense" runat="server" Text='<%# Bind("LicensePlate") %>' CssClass="form-control"></asp:TextBox></EditItemTemplate>
+                                        <asp:TextBox ID="txtEditLicense" runat="server" Text='<%# Bind("LicensePlate") %>' CssClass="form-control"></asp:TextBox>
+                                    </EditItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Status">
                                     <ItemTemplate><%# Eval("Status") %></ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="txtEditStatus" runat="server" Text='<%# Bind("Status") %>' CssClass="form-control"></asp:TextBox></EditItemTemplate>
+                                        <asp:TextBox ID="txtEditStatus" runat="server" Text='<%# Bind("Status") %>' CssClass="form-control"></asp:TextBox>
+                                    </EditItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Gear">
                                     <ItemTemplate><%# Eval("Gear") %></ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="txtEditGear" runat="server" Text='<%# Bind("Gear") %>' CssClass="form-control"></asp:TextBox></EditItemTemplate>
+                                        <asp:TextBox ID="txtEditGear" runat="server" Text='<%# Bind("Gear") %>' CssClass="form-control"></asp:TextBox>
+                                    </EditItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="CC">
                                     <ItemTemplate><%# Eval("EngineCC") %></ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="txtEditEngineCC" runat="server" Text='<%# Bind("EngineCC") %>' CssClass="form-control" TextMode="Number"></asp:TextBox></EditItemTemplate>
+                                        <asp:TextBox ID="txtEditEngineCC" runat="server" Text='<%# Bind("EngineCC") %>' CssClass="form-control" TextMode="Number"></asp:TextBox>
+                                    </EditItemTemplate>
                                 </asp:TemplateField>
 
                                 <%-- (ใหม่) เพิ่มช่อง DailyRate --%>
@@ -80,7 +85,17 @@
                                     </EditItemTemplate>
                                 </asp:TemplateField>
                                 <asp:CommandField ShowEditButton="True" ButtonType="Button" ControlStyle-CssClass="btn btn-warning btn-xs" />
-                                <asp:CommandField ShowDeleteButton="True" ButtonType="Button" ControlStyle-CssClass="btn btn-danger btn-xs" />
+                                <asp:TemplateField ShowHeader="False">
+                                    <ItemTemplate>
+                                        <asp:Button ID="btnDelete" runat="server" Text="Delete"
+                                            CssClass="btn btn-danger btn-xs"
+                                            CommandName="Delete"
+                                            OnClientClick="return confirm('คุณแน่ใจหรือไม่ว่าต้องการลบรถคันนี้? (ข้อมูลประวัติการเช่าทั้งหมดของรถคันนี้จะหายไปด้วย!)');" />
+                                        <%-- (Tag closes here) --%>
+
+                                        <%-- (You can leave the comment here, outside the tag) --%>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
                     </ContentTemplate>
