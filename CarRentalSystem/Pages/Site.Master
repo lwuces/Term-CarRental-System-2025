@@ -11,6 +11,9 @@
 
     <link href="~/Content/Site.css" rel="stylesheet" />
 
+    <%-- VV (เพิ่มบรรทัดนี้) VV --%>
+    <link href="~/Content/minimal-theme.css" rel="stylesheet" />
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 
