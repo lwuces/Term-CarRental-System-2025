@@ -14,13 +14,8 @@
         <%-- 3. ส่วนค้นหา --%>
         <h3>ค้นหารถเช่า</h3>
         <div class="row">
-            <%-- (1. ลบ style="text-align: left;" ออก) --%>
-
             <%-- (เราจะจัดคอลัมน์ใหม่ให้อยู่กึ่งกลาง โดยใช้ offset) --%>
-            <%-- (2 + 3 + 3 + 3 + 1 = 12) --%>
-
-            <div class="col-md-2 col-md-offset-1">
-                <%-- (เพิ่ม col-md-offset-1) --%>
+            <div class="col-md-3 col-md-offset-1">
                 <label>เลือกสาขา:</label>
                 <asp:DropDownList ID="ddlPickupBranch" runat="server" CssClass="form-control"></asp:DropDownList>
             </div>
@@ -33,35 +28,12 @@
                 <asp:TextBox ID="txtReturnDate" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
             </div>
             <div class="col-md-2">
-                <%-- (2. ขยับปุ่มไปทางขวา) --%>
                 <br />
                 <asp:Button ID="btnSearch" runat="server" Text="ค้นหารถ" CssClass="btn btn-primary btn-lg" OnClick="btnSearch_Click" />
             </div>
         </div>
 
-        <hr />
-
-        <%-- 4. ส่วนการ์ด Dashboard (เหมือนรูปที่ 1) --%>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="dashboard-card">
-                    <h4>Total Cars</h4>
-                    <asp:Label ID="lblTotalCars" runat="server" Text="0" CssClass="dashboard-number"></asp:Label>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="dashboard-card">
-                    <h4>Customers</h4>
-                    <asp:Label ID="lblTotalCustomers" runat="server" Text="0" CssClass="dashboard-number"></asp:Label>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="dashboard-card">
-                    <h4>Active Rentals</h4>
-                    <asp:Label ID="lblActiveRentals" runat="server" Text="0" CssClass="dashboard-number"></asp:Label>
-                </div>
-            </div>
-        </div>
+        <%-- (เราลบ <hr /> และ <div class="row">...</div> ของ Dashboard ออกจากตรงนี้) --%>
 
     </div>
     <%-- ปิด .main-content-centered --%>

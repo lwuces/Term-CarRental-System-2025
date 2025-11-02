@@ -19,7 +19,7 @@
 
 </head>
 <body>
-    <form runat="server">
+    <form id="form1" runat="server" style="display: flex; flex-direction: column; min-height: 100vh;">
         <asp:ScriptManager runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
@@ -40,7 +40,7 @@
         </asp:ScriptManager>
 
         <%-- 1. NAVBAR (Bootstrap 3) --%>
-        <nav class="navbar navbar-inverse navbar-fixed-top">
+        <nav class="navbar navbar-inverse navbar-fixed-top"> <%-- (ใช้ navbar-default โทนสว่าง) --%>
             <div class="container">
                 <%-- Logo (Left) --%>
                 <div class="navbar-header">
@@ -66,8 +66,6 @@
                         <li id="liAdminDashboard" runat="server" visible="false"><a runat="server" href="~/Pages/Admin/Dashboard.aspx">Admin Dashboard</a></li>
                         <li id="liManageCars" runat="server" visible="false"><a runat="server" href="~/Pages/Admin/ManageCars.aspx">Manage Cars</a></li>
                         <li id="liManageBranches" runat="server" visible="false"><a runat="server" href="~/Pages/Admin/ManageBranches.aspx">Manage Branches</a></li>
-
-                        <%-- (This is the new link from Step 3) --%>
                         <li id="liManageReturns" runat="server" visible="false"><a runat="server" href="~/Pages/Admin/ManageReturns.aspx">Manage Returns</a></li>
 
                         <%-- 3. Login/Logout Section --%>
@@ -82,17 +80,25 @@
             </div>
         </nav>
 
-        <%-- Main Content Area --%>
-        <div class="container body-content" style="padding-top: 70px;">
+        <%-- (แก้ไข) ส่วนเนื้อหาหลัก (ที่ขยายตัวและจัดกลาง) --%>
+        <div class="container body-content" 
+             style="padding-top: 70px; flex-grow: 1; display: flex; align-items: center;">
+            
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                <%-- เนื้อหาจาก Default.aspx หรือหน้าอื่นๆ จะมาแสดงตรงนี้ --%>
             </asp:ContentPlaceHolder>
-            <hr />
-            <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
-            </footer>
-        </div>
-    </form>
+        
+        </div> <%-- (ปิด body-content) --%>
 
+
+        <%-- (แก้ไข) ย้าย Footer ออกมาอยู่นอก body-content --%>
+        <footer class="container" style="text-align: center; padding: 20px 0;">
+            <hr />
+            <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
+        </footer>
+
+    </form>
+    
     <%-- Bootstrap JS (Required for Hamburger Menu) --%>
     <asp:PlaceHolder runat="server">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>

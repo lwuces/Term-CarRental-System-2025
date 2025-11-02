@@ -1,49 +1,52 @@
 ﻿/* --- 1. Basic & Body --- */
 body {
-    background-color: #f8f9fa; /* สีพื้นหลังเทาอ่อน (เหมือนตัวอย่าง) */
+    background-color: #f8f9fa;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    color: #212529; /* สีตัวหนังสือดำ (นุ่มกว่าสีดำสนิท) */
+    color: #212529;
 }
 
 /* --- 2. Navbar --- */
-/* (เปลี่ยนจาก navbar-inverse สีดำ เป็น navbar-default โทนสว่าง) */
-.navbar-default {
-    background-color: #ffffff;
-    border-color: #e9ecef; /* เส้นขอบบางๆ */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.03); /* เงาจางๆ */
+.navbar-inverse { /* (Navbar สีดำ) */
+    background-color: #222;
+    border-color: #080808;
 }
 
-    .navbar-default .navbar-brand {
-        color: #212529;
-        font-weight: 600; /* ตัวหนาขึ้น */
+    .navbar-inverse .navbar-brand {
+        color: #9d9d9d;
+        font-weight: 600;
     }
 
-    .navbar-default .navbar-nav > li > a {
-        color: #5a5a5a;
+    .navbar-inverse .navbar-nav > li > a {
+        color: #9d9d9d;
     }
-    /* แก้ไขปุ่ม Logout (LinkButton) ให้เหมือนลิงก์อื่น */
-    .navbar-default .navbar-nav > li > #lnkLogout {
+
+    .navbar-inverse .navbar-nav > li > #lnkLogout {
         padding: 15px;
         line-height: 20px;
-        color: #5a5a5a;
+        color: #9d9d9d;
+        background-color: transparent;
     }
 
-        .navbar-default .navbar-nav > li > #lnkLogout:hover {
-            color: #212529;
+        .navbar-inverse .navbar-nav > li > #lnkLogout:hover {
+            color: #ffffff;
             text-decoration: none;
         }
 
+    .navbar-inverse .navbar-brand:hover,
+    .navbar-inverse .navbar-nav > li > a:hover {
+        color: #ffffff;
+    }
+
 /* --- 3. Cards (Panels & Modals) --- */
-/* (นี่คือส่วนสำคัญที่สุด ที่ทำให้ดู minimal) */
 .panel {
-    border-radius: 12px; /* ขอบมน (เหมือนตัวอย่าง) */
-    border: 1px solid #e9ecef; /* เส้นขอบสีเทาอ่อน */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* เงาจางๆ */
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     background-color: #ffffff;
 }
-/* (หัว Panel) */
+
 .panel-default > .panel-heading {
-    background-color: #ffffff; /* หัวสีขาวสะอาด */
+    background-color: #ffffff;
     border-bottom: 1px solid #e9ecef;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
@@ -51,10 +54,10 @@ body {
 
     .panel-default > .panel-heading h3,
     .panel-default > .panel-heading h4 {
-        font-weight: 600; /* ตัวหนาขึ้น */
+        font-weight: 600;
         color: #212529;
     }
-/* (Modal Popup) */
+
 .modal-content {
     border-radius: 12px;
     border: 1px solid #e9ecef;
@@ -75,31 +78,42 @@ body {
     border: 1px solid #e9ecef;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     background-color: #ffffff;
-    text-align: left; /* จัดชิดซ้าย (เหมือนตัวอย่าง) */
+    text-align: left;
 }
 
     .dashboard-card h4 {
         color: #777;
         margin-top: 0;
         font-size: 14px;
-        font-weight: 600; /* (Bold) */
+        font-weight: 600;
     }
 
 .dashboard-number {
     font-size: 2.5em;
     font-weight: 600;
-    color: #212529; /* สีเข้ม */
+    color: #212529;
 }
 
+/* (คลาสจัดกลางเนื้อหา) */
+.main-content-centered {
+    max-width: 900px;
+    margin: 40px auto;
+    text-align: center;
+    width: 100%;
+}
+
+    .main-content-centered[style*="max-width: 1000px"] {
+        max-width: 1000px !important;
+    }
+
 /* --- 4. Buttons --- */
-/* (ปุ่มทั้งหมดจะมน และเปลี่ยนโทนสี) */
 .btn {
-    border-radius: 20px; /* ทำให้มน */
+    border-radius: 20px;
     padding: 8px 20px;
     font-weight: 600;
     transition: all 0.2s ease-in-out;
 }
-/* (Primary: สีดำ เหมือนปุ่ม 'On the way') */
+
 .btn-primary {
     background-color: #212529;
     border-color: #212529;
@@ -111,7 +125,7 @@ body {
         border-color: #424649;
         color: #ffffff;
     }
-/* (Success: สีเขียว เหมือน 'In Transit') */
+
 .btn-success {
     background-color: #28a745;
     border-color: #28a745;
@@ -124,7 +138,6 @@ body {
 }
 
 /* --- 5. Tables (GridView) --- */
-/* (ทำให้ตารางดูสะอาด) */
 .table > thead > tr > th {
     border-bottom: 2px solid #e9ecef;
     color: #777;
@@ -134,41 +147,39 @@ body {
 }
 
 .table > tbody > tr > td {
-    border-top: 1px solid #e9ecef; /* เส้นตารางบางๆ */
+    border-top: 1px solid #e9ecef;
     vertical-align: middle;
 }
-/* (หัวตารางสีฟ้าที่เราเคยทำใน ManageBranches) */
+
 .table-header-custom th {
-    background-color: #f8f9fa; /* เปลี่ยนเป็นสีเทาอ่อน */
+    background-color: #f8f9fa;
     color: #5a5a5a;
 }
 
 .table-hover > tbody > tr:hover {
-    background-color: #f8f9fa; /* สีอ่อนๆ เวลา hover */
+    background-color: #f8f9fa;
 }
 
 /* --- 6. Filters (CarList Sidebar) --- */
-/* (ปุ่ม Toggle ที่เราทำไว้) */
-
-/* (โค้ดที่เพิ่ม) ซ่อนวงกลม/สี่เหลี่ยม ของจริง */
 .toggle-buttons input[type="radio"],
 .toggle-buttons input[type="checkbox"] {
     display: none;
 }
 
 .toggle-buttons label {
-    border-radius: 20px; /* มน */
+    border-radius: 20px;
     border: 1px solid #ced4da;
     background-color: #ffffff;
     color: #495057;
     padding: 6px 14px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.03);
     transition: all 0.2s ease-in-out;
+    cursor: pointer;
 }
-/* (ปุ่ม Toggle เมื่อถูกเลือก) */
+
 .toggle-buttons input[type="radio"]:checked + label,
 .toggle-buttons input[type="checkbox"]:checked + label {
-    background-color: #212529; /* สีดำ (Active) */
+    background-color: #212529;
     border-color: #212529;
     color: #ffffff;
     box-shadow: none;
@@ -176,7 +187,7 @@ body {
 
 /* (Textbox, Dropdown) */
 .form-control {
-    border-radius: 8px; /* มนเล็กน้อย */
+    border-radius: 8px;
     border: 1px solid #ced4da;
     box-shadow: none;
 }
@@ -184,4 +195,137 @@ body {
     .form-control:focus {
         border-color: #212529;
         box-shadow: 0 0 0 0.2rem rgba(33, 37, 41, 0.25);
+    }
+
+/* --- 7. Login Page Styles --- */
+.login-card {
+    max-width: 400px;
+    width: 100%;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 24px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    margin: 0 auto;
+}
+
+    .login-card .panel-body,
+    .login-card .panel-footer {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+    }
+
+    .login-card .form-group,
+    .login-card .btn-block,
+    .login-card .text-danger {
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .login-card .form-group {
+        text-align: left;
+        margin-bottom: 15px;
+    }
+
+    .login-card .btn-block {
+        margin-bottom: 15px;
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    /* (สไตล์ไอคอน) */
+    .login-card .input-group-addon {
+        background-color: #f4f7fa;
+        border: 1px solid #ced4da;
+        border-right: none;
+        border-radius: 8px 0 0 8px;
+    }
+
+    .login-card .input-group .form-control {
+        border-left: none;
+    }
+
+    .login-card .input-group-addon + .form-control {
+        border-radius: 0;
+    }
+
+    .login-card .input-group .form-control:last-child {
+        border-radius: 0 8px 8px 0;
+    }
+
+    .login-card #togglePassword {
+        background-color: #f4f7fa;
+        border: 1px solid #ced4da;
+        border-left: none;
+        border-radius: 0 8px 8px 0;
+        box-shadow: none !important;
+    }
+
+    .login-card .password-wrapper {
+        position: relative;
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 15px;
+    }
+
+        .login-card .password-wrapper .form-control {
+            padding-right: 45px;
+            border-left: 1px solid #ced4da;
+            border-radius: 8px !important;
+        }
+
+        .login-card .password-wrapper #togglePassword {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            height: 100%;
+            width: 45px;
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            color: #777;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+            .login-card .password-wrapper #togglePassword:focus {
+                outline: none;
+            }
+
+    .login-card .form-group.remember-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        margin-top: -5px;
+        margin-bottom: 20px;
+    }
+
+        .login-card .form-group.remember-row label {
+            font-weight: normal;
+            margin-bottom: 0;
+            margin-left: 5px;
+            color: #5a5a5a;
+        }
+
+/* --- 8. ตัวจัดกลางแนวตั้งสำหรับหน้า Login/Register --- */
+.login-page-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 70vh;
+}
+
+    .login-page-wrapper .main-content-centered {
+        margin-top: 0;
+        margin-bottom: 0;
     }
