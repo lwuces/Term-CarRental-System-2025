@@ -10,10 +10,10 @@ namespace CarRentalSystem
 {
     public partial class _Default : Page
     {
-        // สร้างตัวแปร DataContext เพื่อเชื่อมต่อฐานข้อมูล
         CarRentalDataDataContext db = new CarRentalDataDataContext(
             ConfigurationManager.ConnectionStrings["CarRentalDBConnectionString"].ConnectionString
         );
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -21,27 +21,11 @@ namespace CarRentalSystem
                 // โหลดสาขาใส่ Dropdown (จากขั้นตอนก่อน)
                 LoadBranches();
 
-                // ฟังก์ชันใหม่: โหลดข้อมูลตัวเลข Dashboard
-                LoadDashboardStats();
+                // (เราลบ LoadDashboardStats(); ออกจากตรงนี้แล้ว)
             }
         }
 
-        // ฟังก์ชันใหม่: สำหรับดึงข้อมูลมาแสดงบนการ์ด
-        private void LoadDashboardStats()
-        {
-            // (นี่คือ Query ตัวอย่าง คุณสามารถปรับแก้ให้ซับซ้อนขึ้นได้)
-
-            // นับรถทั้งหมด
-            lblTotalCars.Text = db.Cars.Count().ToString();
-
-            // นับลูกค้าทั้งหมด
-            lblTotalCustomers.Text = db.Customers.Count().ToString();
-
-            // นับการเช่าที่ยังไม่คืน (Active)
-            lblActiveRentals.Text = db.Rentals.Count(r =>
-                r.ActualReturnDate == null && r.Car.Status == "Rented"
-            ).ToString();
-        }
+        // (เราลบฟังก์ชัน LoadDashboardStats() ทั้งหมดออกจากตรงนี้แล้ว)
 
         // ฟังก์ชันเดิม: สำหรับโหลดสาขา
         private void LoadBranches()
@@ -50,18 +34,17 @@ namespace CarRentalSystem
             ddlPickupBranch.DataTextField = "Name";
             ddlPickupBranch.DataValueField = "BranchID";
             ddlPickupBranch.DataBind();
-            // เพิ่มตัวเลือก "เลือกสาขา"
             ddlPickupBranch.Items.Insert(0, new ListItem("-- ทุกสาขา --", ""));
         }
 
+        // ฟังก์ชันเดิม: สำหรับปุ่มค้นหา
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            // ดึงค่าจาก DropDownList และ TextBox
             string branchID = ddlPickupBranch.SelectedValue;
             string pickupDate = txtPickupDate.Text;
 
-            // ส่งผู้ใช้ไปยังหน้า CarList พร้อมแนบค่าค้นหาไปด้วย
-            Response.Redirect($"CarList.aspx?branch={branchID}&pickup={pickupDate}");
+            // ส่งผู้ใช้ไปหน้า CarList พร้อมค่าค้นหา
+            Response.Redirect($"~/Pages/CarList.aspx?branch={branchID}&pickup={pickupDate}");
         }
     }
 }
