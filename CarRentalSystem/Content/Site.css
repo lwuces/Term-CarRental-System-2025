@@ -1,82 +1,75 @@
-/* กำหนด padding เริ่มต้นสำหรับเนื้อหาหลัก เพื่อไม่ให้ชิดขอบจอ */
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    margin-top: 15px;
-    padding-left: 15px;
-    padding-right: 15px;
+    margin-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
-/* กำหนดความกว้างสูงสุดของ input form (ป้องกันไม่ให้ยืดเต็ม 100%) */
+/* Set widths on the form inputs since otherwise they're 100% wide */
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 280px;
 }
 
-/* Responsive: สำหรับหน้าจอขนาดแท็บเล็ตแนวตั้งขึ้นไป (768px) */
+/* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
-    .body-content {
-        /* เอา padding ออก เมื่อหน้าจอใหญ่ขึ้น */
-        padding: 0;
-    }
+    .body-content {
+        padding: 0;
+    }
 }
 
 /*
-    ========================================
-    CSS สำหรับจัดกลางเนื้อหา และสไตล์ Dashboard
-    ========================================
+    CSS สำหรับจัดกลางเนื้อหา และสร้าง Dashboard Cards
 */
 
-/* 1. คลาสสำหรับจัดกลางเนื้อหาหลักของหน้า (กำหนดความกว้างสูงสุด และจัดกึ่งกลาง) */
+/* 1. คลาสนี้จะจัดกลางเนื้อหาหลักทั้งหมด */
 .main-content-centered {
-    max-width: 900px; /* กำหนดความกว้างสูงสุดของเนื้อหา */
-    margin: 40px auto; /* ใช้ margin 'auto' เพื่อจัดกึ่งกลางแนวนอน */
-    text-align: center; /* บังคับให้ element ภายในจัดกลางเป็นค่าเริ่มต้น */
+    max-width: 900px; /* กำหนดความกว้างสูงสุดของเนื้อหา */
+    margin: 40px auto; /* 'auto' ซ้าย-ขวา จะจัดให้อยู่กึ่งกลาง */
+    text-align: center; /* จัดกลางข้อความต้อนรับ */
 }
 
-/* 2. สไตล์สำหรับการ์ดแสดงผลในหน้า Dashboard (เช่น ยอดรวมต่างๆ) */
+/* 2. สไตล์สำหรับการ์ด Dashboard (เหมือนรูปที่ 1) */
 .dashboard-card {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
-    /* หัวข้อย่อย (h4) ภายในการ์ด Dashboard */
-    .dashboard-card h4 {
-        color: #555;
-        margin-top: 0;
-    }
+    .dashboard-card h4 {
+        color: #555;
+        margin-top: 0;
+    }
 
-/* 3. สไตล์ตัวเลขขนาดใหญ่ (เช่น ตัวเลขยอดรวม) ใน Dashboard Card */
 .dashboard-number {
-    font-size: 2.5em; /* ตัวเลขขนาดใหญ่ */
-    font-weight: bold;
-    color: #337ab7; /* สีน้ำเงินหลักของธีม */
+    font-size: 2.5em; /* ตัวเลขใหญ่ๆ */
+    font-weight: bold;
+    color: #337ab7; /* สีน้ำเงิน (เหมือนในรูป) */
 }
 
-/* 4. สไตล์หัวตาราง (Header) แบบกำหนดเอง (พื้นหลังสีน้ำเงิน) */
 .table-header-custom th {
-    background-color: #337ab7; /* สีพื้นหลังน้ำเงิน */
-    color: #ffffff; /* ตัวอักษรสีขาว */
-    border-bottom: 0 !important;
+    background-color: #337ab7; /* สีน้ำเงิน */
+    color: #ffffff;
+    border-bottom: 0 !important;
 }
-
-/* 5. จัดกึ่งกลางหัวข้อ (h3) ที่อยู่ใน .main-content-centered */
+/* 5. จัดกึ่งกลางหัวข้อ (Heading) ภายใน .main-content-centered */
 .main-content-centered h3 {
-    text-align: center; /* จัดกึ่งกลาง (แม้ว่า parent จะ center แล้วก็ตาม) */
-    margin-bottom: 25px; /* เพิ่มระยะห่างด้านล่างหัวข้อ */
-    color: #333;
+    text-align: center; /* จัดกึ่งกลางข้อความ My Confirmed Rentals */
+    margin-bottom: 25px; /* เพิ่มระยะห่างด้านล่างหัวข้อ */
+    color: #333;
 }
 
-/* 6. จัดกึ่งกลางเนื้อหาในเซลล์ของตาราง (ทั้ง <th> และ <td>) ที่อยู่ใน .main-content-centered */
+/* 6. จัดกึ่งกลางเนื้อหาในเซลล์ของตาราง (ทั้ง header และ data) */
 .main-content-centered .table th,
 .main-content-centered .table td {
-    text-align: center;
+    text-align: center;
 }
 
-/* 7. Override: ทำให้ข้อความในกล่องแจ้งเตือน (alert) กลับไปจัดชิดซ้าย
-    (เนื่องจาก .main-content-centered บังคับให้ทุกอย่างจัดกลาง) */
+/* 7. ทำให้ข้อความใน alert กลับไปจัดซ้ายตามปกติ (Override text-align: center ของ .main-content-centered) */
 .main-content-centered .alert {
-    text-align: left;
+    text-align: left;
 }
