@@ -40,8 +40,8 @@
         </asp:ScriptManager>
 
         <%-- 1. NAVBAR (Bootstrap 3) --%>
-        <nav class="navbar navbar-inverse navbar-fixed-top"> <%-- (ใช้ navbar-default โทนสว่าง) --%>
-            <div class="container">
+        <nav class="navbar navbar-inverse navbar-fixed-top"> 
+            <div class="container-fluid">
                 <%-- Logo (Left) --%>
                 <div class="navbar-header">
                     <%-- Hamburger Button --%>
@@ -62,11 +62,24 @@
                         <%-- 1. Customer Link (Hide from Admin) --%>
                         <li id="liMyRentals" runat="server"><a runat="server" href="~/Pages/MyRentals.aspx">My Rentals</a></li>
 
-                        <%-- 2. Admin Links (Hide from Customer) --%>
-                        <li id="liAdminDashboard" runat="server" visible="false"><a runat="server" href="~/Pages/Admin/Dashboard.aspx">Admin Dashboard</a></li>
-                        <li id="liManageCars" runat="server" visible="false"><a runat="server" href="~/Pages/Admin/ManageCars.aspx">Manage Cars</a></li>
-                        <li id="liManageBranches" runat="server" visible="false"><a runat="server" href="~/Pages/Admin/ManageBranches.aspx">Manage Branches</a></li>
-                        <li id="liManageReturns" runat="server" visible="false"><a runat="server" href="~/Pages/Admin/ManageReturns.aspx">Manage Returns</a></li>
+                        <%-- 2. Admin Links (Dropdown) --%>
+                        <li id="liAdminMenu" runat="server" visible="false" class="dropdown">
+                            <%-- หัวข้อหลักของ Dropdown --%>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-briefcase"></span> Manage <span class="caret"></span>
+                            </a>
+                            
+                            <%-- รายการย่อยใน Dropdown --%>
+                            <ul class="dropdown-menu">
+                                <li><a runat="server" href="~/Pages/Admin/Dashboard.aspx">Admin Dashboard</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a runat="server" href="~/Pages/Admin/ManageCars.aspx">Manage Cars</a></li>
+                                <li><a runat="server" href="~/Pages/Admin/ManageBranches.aspx">Manage Branches</a></li>
+                                <li><a runat="server" href="~/Pages/Admin/ManageReturns.aspx">Manage Returns</a></li>
+                                <%-- หากคุณมีหน้า ReturnSummary.aspx ให้เพิ่มบรรทัดนี้ด้วย --%>
+                                <%-- <li><a runat="server" href="~/Pages/Admin/ReturnSummary.aspx">Return Summary</a></li> --%>
+                            </ul>
+                        </li>
 
                         <%-- 3. Login/Logout Section --%>
                         <li>
@@ -82,7 +95,7 @@
 
         <%-- (แก้ไข) ส่วนเนื้อหาหลัก (ที่ขยายตัวและจัดกลาง) --%>
         <div class="container body-content" 
-             style="padding-top: 70px; flex-grow: 1; display: flex; align-items: center;">
+                style="padding-top: 70px; flex-grow: 1; display: flex; align-items: center;">
             
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
                 <%-- เนื้อหาจาก Default.aspx หรือหน้าอื่นๆ จะมาแสดงตรงนี้ --%>
@@ -99,7 +112,7 @@
 
     </form>
     
-    <%-- Bootstrap JS (Required for Hamburger Menu) --%>
+    <%-- Bootstrap JS (Required for Hamburger Menu & Dropdown) --%>
     <asp:PlaceHolder runat="server">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     </asp:PlaceHolder>

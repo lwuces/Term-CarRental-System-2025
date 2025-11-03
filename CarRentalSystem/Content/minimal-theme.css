@@ -329,3 +329,67 @@ body {
         margin-top: 0;
         margin-bottom: 0;
     }
+
+/* =====================================================
+    VVV START: โค้ดที่เพิ่มเข้ามาสำหรับ Paging (Minimal Style) VVV
+=====================================================
+*/
+
+.pagination-ys {
+    padding: 0;
+    margin: 20px 0;
+}
+
+    /* GridView Pager ถูกเรนเดอร์เป็น Table เราจึงต้องจัดกลาง Table */
+    .pagination-ys table {
+        margin: 0 auto;
+    }
+
+        .pagination-ys table > tbody > tr > td {
+            display: inline; /* ทำให้ปุ่มเรียงเป็นแนวนอน */
+            padding: 0;
+        }
+
+            /* สไตล์ของปุ่ม (ทั้งลิงก์ 'a' และ 'span' ที่เป็นหน้าปัจจุบัน) */
+            .pagination-ys table > tbody > tr > td > a,
+            .pagination-ys table > tbody > tr > td > span {
+                position: relative;
+                float: left;
+                padding: 6px 12px;
+                margin-left: -1px;
+                line-height: 1.42857143;
+                color: #212529; /* (สีปุ่มตาม Theme) */
+                text-decoration: none;
+                background-color: #fff;
+                border: 1px solid #ddd; /* (สีขอบเทาอ่อน) */
+            }
+
+            /* สไตล์ของ 'span' (หน้าปัจจุบันที่ถูกเลือก) */
+            .pagination-ys table > tbody > tr > td > span {
+                z-index: 2;
+                color: #fff;
+                cursor: default;
+                background-color: #212529; /* (สีปุ่มที่เลือกตาม Theme) */
+                border-color: #212529;
+            }
+
+            /* ทำให้ปุ่มแรกและปุ่มสุดท้ายมีขอบมน */
+            .pagination-ys table > tbody > tr > td:first-child > a,
+            .pagination-ys table > tbody > tr > td:first-child > span {
+                margin-left: 0;
+                border-top-left-radius: 4px;
+                border-bottom-left-radius: 4px;
+            }
+
+            .pagination-ys table > tbody > tr > td:last-child > a,
+            .pagination-ys table > tbody > tr > td:last-child > span {
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px;
+            }
+
+            /* สไตล์เมื่อเอาเมาส์ชี้ (Hover) */
+            .pagination-ys table > tbody > tr > td > a:hover {
+                color: #000;
+                background-color: #eee; /* (สีเทาอ่อนมาก) */
+                border-color: #ddd;
+            }

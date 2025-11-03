@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/Site.Master" AutoEventWireup="true" CodeBehind="ManageCars.aspx.cs" Inherits="CarRentalSystem.Pages.Admin.ManageCars" %>
+﻿<%@ Page Title="Manage Cars" Language="C#" MasterPageFile="~/Pages/Site.Master" AutoEventWireup="true" CodeBehind="ManageCars.aspx.cs" Inherits="CarRentalSystem.Pages.Admin.ManageCars" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -15,25 +15,44 @@
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
                 <div class="clearfix"></div>
-                <%-- (Clear float) --%>
             </div>
 
             <div class="panel-body">
-                <%-- 4. ย้าย UpdatePanel ของ GridView เข้ามาใน Panel Body --%>
+                
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-md-6"> 
+                        <asp:TextBox ID="txtSearchLicensePlate" runat="server" 
+                            CssClass="form-control" 
+                            placeholder="Search by License Plate and press Enter..." 
+                            AutoPostBack="true" 
+                            OnTextChanged="txtSearchLicensePlate_TextChanged"></asp:TextBox>
+                    </div>
+                </div>
+                
                 <asp:UpdatePanel ID="upGrid" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
-                        <%-- (Label สำหรับแสดง Error การลบ) --%>
                         <asp:Label ID="lblGridStatus" runat="server" CssClass="text-danger" EnableViewState="false"></asp:Label>
 
+                        <%-- (VVV แก้ไข) ย้อนกลับไปใช้ Event เก่าๆ 4 บรรทัด) --%>
                         <asp:GridView ID="GridViewCars" runat="server" CssClass="table table-hover"
                             AutoGenerateColumns="False" DataKeyNames="CarID"
+                            
                             OnRowEditing="GridViewCars_RowEditing"
                             OnRowCancelingEdit="GridViewCars_RowCancelingEdit"
                             OnRowUpdating="GridViewCars_RowUpdating"
-                            OnRowDeleting="GridViewCars_RowDeleting"
-                            BorderStyle="None" GridLines="None">
+                            OnRowDeleting="GridViewCars_RowDeleting" 
+                            
+                            BorderStyle="None" GridLines="None"
+                            AllowPaging="True"  
+                            PageSize="10"       
+                            OnPageIndexChanging="GridViewCars_PageIndexChanging"
+                            >
+                            
+                            <PagerStyle CssClass="pagination-ys" HorizontalAlign="Center" /> 
+
                             <Columns>
                                 <asp:BoundField DataField="CarID" HeaderText="ID" ReadOnly="True" />
+                                
                                 <asp:TemplateField HeaderText="Model">
                                     <ItemTemplate><%# Eval("Model") %></ItemTemplate>
                                     <EditItemTemplate>
@@ -64,8 +83,6 @@
                                         <asp:TextBox ID="txtEditEngineCC" runat="server" Text='<%# Bind("EngineCC") %>' CssClass="form-control" TextMode="Number"></asp:TextBox>
                                     </EditItemTemplate>
                                 </asp:TemplateField>
-
-                                <%-- (ใหม่) เพิ่มช่อง DailyRate --%>
                                 <asp:TemplateField HeaderText="Rate (฿)">
                                     <ItemTemplate>
                                         <%# Eval("DailyRate", "{0:N0}") %>
@@ -74,7 +91,6 @@
                                         <asp:TextBox ID="txtEditDailyRate" runat="server" Text='<%# Bind("DailyRate", "{0:N2}") %>' CssClass="form-control" TextMode="Number"></asp:TextBox>
                                     </EditItemTemplate>
                                 </asp:TemplateField>
-
                                 <asp:TemplateField HeaderText="Branch">
                                     <ItemTemplate><%# Eval("Branch.Name") %></ItemTemplate>
                                     <EditItemTemplate>
@@ -84,28 +100,33 @@
                                         </asp:DropDownList>
                                     </EditItemTemplate>
                                 </asp:TemplateField>
+
+                                <%-- (VVV ย้อนกลับ) ใช้ CommandField (Edit/Update/Cancel) --%>
                                 <asp:CommandField ShowEditButton="True" ButtonType="Button" ControlStyle-CssClass="btn btn-warning btn-xs" />
+                                
+                                <%-- (VVV ย้อนกลับ) ใช้ปุ่ม Delete (TemplateField) --%>
                                 <asp:TemplateField ShowHeader="False">
                                     <ItemTemplate>
                                         <asp:Button ID="btnDelete" runat="server" Text="Delete"
                                             CssClass="btn btn-danger btn-xs"
                                             CommandName="Delete"
-                                            OnClientClick="return confirm('คุณแน่ใจหรือไม่ว่าต้องการลบรถคันนี้? (ข้อมูลประวัติการเช่าทั้งหมดของรถคันนี้จะหายไปด้วย!)');" />
-                                        <%-- (Tag closes here) --%>
-
-                                        <%-- (You can leave the comment here, outside the tag) --%>
+                                            OnClientClick="return confirm('คุณแน่ใจหรือไม่ว่าต้องการลบรถคันนี้?');" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
+
                             </Columns>
                         </asp:GridView>
                     </ContentTemplate>
+                         <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="txtSearchLicensePlate" EventName="TextChanged" />
+                        </Triggers>
                 </asp:UpdatePanel>
             </div>
         </div>
     </div>
 
-    <%-- 5. ส่วน Modal (Popup) --%>
-    <div class="modal fade" id="addCarModal" tabindex="-1" role="dialog" aria-labelledby="addCarModalLabel">
+    <%-- Modal "Add New Car" (เหมือนเดิม) --%>
+     <div class="modal fade" id="addCarModal" tabindex="-1" role="dialog" aria-labelledby="addCarModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <asp:UpdatePanel ID="upAddCarModal" runat="server" UpdateMode="Conditional">
@@ -115,40 +136,59 @@
                             <h4 class="modal-title" id="addCarModalLabel">Add New Car</h4>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group">
-                                <label>Model (e.g., 'Toyota Yaris'):</label>
-                                <asp:TextBox ID="txtAddModel" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="form-group">
-                                <label>License Plate:</label>
-                                <asp:TextBox ID="txtAddLicense" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="form-group">
-                                <label>Car Type:</label>
-                                <asp:DropDownList ID="ddlAddType" runat="server" CssClass="form-control" DataTextField="TypeName" DataValueField="TypeID"></asp:DropDownList>
-                            </div>
-                            <div class="form-group">
-                                <label>Branch:</label>
-                                <asp:DropDownList ID="ddlAddBranch" runat="server" CssClass="form-control" DataTextField="Name" DataValueField="BranchID"></asp:DropDownList>
-                            </div>
-                            <div class="form-group">
-                                <label>Gear:</label>
-                                <asp:RadioButtonList ID="rblAddGear" runat="server" RepeatDirection="Horizontal">
-                                    <asp:ListItem Value="Auto" Selected="True">Auto</asp:ListItem>
-                                    <asp:ListItem Value="Manual">Manual</asp:ListItem>
-                                </asp:RadioButtonList>
-                            </div>
-                            <div class="form-group">
-                                <label>Engine CC:</label>
-                                <asp:TextBox ID="txtAddEngine" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
-                            </div>
-
-                            <%-- (ใหม่) เพิ่มช่อง DailyRate --%>
-                            <div class="form-group">
-                                <label>Daily Rate (฿):</label>
-                                <asp:TextBox ID="txtAddDailyRate" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
-                            </div>
-
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Model (e.g., 'Toyota Yaris'):</label>
+                                        <asp:TextBox ID="txtAddModel" runat="server" CssClass="form-control"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>License Plate:</label>
+                                        <asp:TextBox ID="txtAddLicense" runat="server" CssClass="form-control"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Car Type:</label>
+                                        <asp:DropDownList ID="ddlAddType" runat="server" CssClass="form-control" DataTextField="TypeName" DataValueField="TypeID"></asp:DropDownList>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Branch:</label>
+                                        <asp:DropDownList ID="ddlAddBranch" runat="server" CssClass="form-control" DataTextField="Name" DataValueField="BranchID"></asp:DropDownList>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Gear:</label>
+                                        <asp:RadioButtonList ID="rblAddGear" runat="server" RepeatDirection="Horizontal">
+                                            <asp:ListItem Value="Auto" Selected="True">Auto</asp:ListItem>
+                                            <asp:ListItem Value="Manual">Manual</asp:ListItem>
+                                        </asp:RadioButtonList>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Engine CC:</label>
+                                        <asp:TextBox ID="txtAddEngine" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Daily Rate (฿):</label>
+                                        <asp:TextBox ID="txtAddDailyRate" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div> 
                             <asp:Label ID="lblAddStatus" runat="server" EnableViewState="false" CssClass="text-danger"></asp:Label>
                         </div>
                         <div class="modal-footer">
@@ -160,7 +200,9 @@
             </div>
         </div>
     </div>
+    <%-- (สิ้นสุด Modal "Add") --%>
 
+    <%-- (ลบ Modal "Edit Car" ทิ้ง) --%>
 
     <%-- (SQL DataSources) --%>
     <asp:SqlDataSource ID="SqlDataSourceBranches" runat="server"

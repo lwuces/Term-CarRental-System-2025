@@ -42,40 +42,13 @@ namespace CarRentalSystem
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl liMyRentals;
 
         /// <summary>
-        /// liAdminDashboard control.
+        /// liAdminMenu control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liAdminDashboard;
-
-        /// <summary>
-        /// liManageCars control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liManageCars;
-
-        /// <summary>
-        /// liManageBranches control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liManageBranches;
-
-        /// <summary>
-        /// liManageReturns control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liManageReturns;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liAdminMenu;
 
         /// <summary>
         /// lblWelcome control.

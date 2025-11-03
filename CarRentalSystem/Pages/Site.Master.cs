@@ -26,22 +26,20 @@ namespace CarRentalSystem
                     // ถ้าเป็น Admin:
                     liMyRentals.Visible = false; // ซ่อนลิงก์ลูกค้า
 
-                    // แสดงลิงก์ Admin
-                    liAdminDashboard.Visible = true;
-                    liManageCars.Visible = true;
-                    liManageBranches.Visible = true;
-                    liManageReturns.Visible = true; // (เพิ่มบรรทัดนี้)
+                    // VV --- นี่คือส่วนที่แก้ไข --- VV
+                    // เปิดเมนู Dropdown "Manage" ทั้งก้อน
+                    liAdminMenu.Visible = true;
+                    // AA ------------------------ AA
                 }
                 else
                 {
                     // ถ้าเป็น Customer ทั่วไป:
                     liMyRentals.Visible = true; // แสดงลิงก์ลูกค้า
 
-                    // ซ่อนลิงก์ Admin
-                    liAdminDashboard.Visible = false;
-                    liManageCars.Visible = false;
-                    liManageBranches.Visible = false;
-                    liManageReturns.Visible = false; // (เพิ่มบรรทัดนี้)
+                    // VV --- นี่คือส่วนที่แก้ไข --- VV
+                    // ซ่อนเมนู Dropdown "Manage"
+                    liAdminMenu.Visible = false;
+                    // AA ------------------------ AA
                 }
             }
             else
@@ -53,10 +51,11 @@ namespace CarRentalSystem
 
                 // ซ่อนลิงก์ทั้งหมด
                 liMyRentals.Visible = false;
-                liAdminDashboard.Visible = false;
-                liManageCars.Visible = false;
-                liManageBranches.Visible = false;
-                liManageReturns.Visible = false; // (เพิ่มบรรทัดนี้)
+
+                // VV --- นี่คือส่วนที่แก้ไข --- VV
+                // ซ่อนเมนู Dropdown "Manage"
+                liAdminMenu.Visible = false;
+                // AA ------------------------ AA
             }
         }
 
