@@ -56,3 +56,20 @@ textarea {
     color: #ffffff;
     border-bottom: 0 !important;
 }
+/* 5. จัดกึ่งกลางหัวข้อ (Heading) ภายใน .main-content-centered */
+.main-content-centered h3 {
+    text-align: center; /* จัดกึ่งกลางข้อความ My Confirmed Rentals */
+    margin-bottom: 25px; /* เพิ่มระยะห่างด้านล่างหัวข้อ */
+    color: #333;
+}
+
+/* 6. จัดกึ่งกลางเนื้อหาในเซลล์ของตาราง (ทั้ง header และ data) */
+.main-content-centered .table th,
+.main-content-centered .table td {
+    text-align: center;
+}
+
+/* 7. ทำให้ข้อความใน alert กลับไปจัดซ้ายตามปกติ (Override text-align: center ของ .main-content-centered) */
+.main-content-centered .alert {
+    text-align: left;
+}

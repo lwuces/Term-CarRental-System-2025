@@ -44,7 +44,7 @@
                 </table>
                 <hr />
                 
-                <asp:Button ID="btnConfirmReturn" runat="server" Text="Confirm Return & Make Car Available" 
+                <asp:Button ID="btnConfirmReturn" runat="server" Text="Confirm Return" 
                     CssClass="btn btn-success btn-lg btn-block" OnClick="btnConfirmReturn_Click" />
                 <asp:Label ID="lblStatus" runat="server" EnableViewState="false" CssClass="text-danger"></asp:Label>
             </div>
